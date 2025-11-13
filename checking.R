@@ -11,6 +11,8 @@ for (x in source) {
   print(paste0(check_klower, " ", check_lupper))
 }
 
+
+##IGNORE FROM HERE (JUST TESTING)
 stats <- read.table("data/Turkish_dependency_tree_metrics.txt", header = FALSE)
 check_klower_v = (4-6/stats$V1 <= stats$V2)
 which(check_klower_v==FALSE)
@@ -19,3 +21,4 @@ for (n, k, d in stats) {
   check_klower = (4-6/n <= k)
   print(check_klower)
 }
+
