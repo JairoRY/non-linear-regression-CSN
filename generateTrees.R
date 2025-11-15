@@ -33,28 +33,27 @@ for (fl in files) {
     g <- simplify(g) # Remove self-loops and duplicate edges
     
     n <- vcount(g)
+    
     degrees <- degree(g)
     k2 <- mean(degrees^2)
     nk2 <- sum(degrees^2)
     
-    valid_k <- (4 - 6/n <= k2 & k2 <= n - 1)
-    if (!valid_k) {
-      print("WARNING: Invalid k2 found !!")
-      plot(g)
-    }
+    dists <- abs(edgs$v1 - edgs$v2)
+    d_mean <- mean(dists)
+    sum_d <- sum(dists)
     
-    return(c(n = n, k2 = k2, nk2 = nk2))
+    q <- sum(degrees%%2)
+    
+    return(c(n = n, k2 = k2, nk2 = nk2, d_mean = d_mean, sum_d = sum_d, q = q))
   })
   
   metrics_df <- do.call(rbind, metrics)
-  # output_file <- file.path("data", paste0(lang, "_dependency_tree_metrics.txt"))
-  # write.table(metrics_df, file = output_file, row.names = FALSE, col.names = FALSE, sep = "\t")
   
-  output_file_k2 <- file.path("data", paste0(lang, "_dependency_tree_metrics.txt"))
-  write.table(metrics_df[, c("n", "k2")], file = output_file_k2, row.names = FALSE, col.names = FALSE, sep = "\t")
+  output_file <- file.path("data", paste0(lang, "_dependency_tree_metrics.txt"))
+  write.table(metrics_df[, c("n", "k2", "d_mean")], file = output_file, row.names = FALSE, col.names = FALSE, sep = "\t")
   
-  output_file_nk2 <- file.path("validity_metrics", paste0(lang, "_metrics_for_validity_check.txt"))
-  write.table(metrics_df, file = output_file_nk2, row.names = FALSE, sep = "\t")
+  output_file_for_validity_check <- file.path("validity_metrics", paste0(lang, "_metrics_for_validity_check.txt"))
+  write.table(metrics_df, file = output_file_for_validity_check, row.names = FALSE, sep = "\t")
   
 }
 
