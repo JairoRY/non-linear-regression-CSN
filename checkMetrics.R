@@ -15,5 +15,3 @@ for (fl in files) {
   
   print(paste0(lang, ": <k2> ", (lower_bound_k & upper_bound_k), ", <d> ", (lower_bound_d & upper_bound_d)))
 }
-
-
