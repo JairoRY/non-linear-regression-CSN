@@ -19,7 +19,7 @@ for (file in files) {
   # Simple plot
   plot_simple <- ggplot(metrics, aes(x = vertices, y = degree_2nd_moment)) +
     geom_point(size = point_size) +
-    labs(x = "Vertices (n)", 
+    labs(title = lang, x = "n", 
          y = TeX("$\\langle k^2 \\rangle$")) +
     theme_minimal() +
     theme(axis.text=element_text(size=8), axis.title=element_text(size=10))
@@ -33,7 +33,7 @@ for (file in files) {
   
   plot_simple_log_y <- ggplot(metrics, aes(x = vertices, y = degree_2nd_moment)) +
     geom_point(size = point_size) +
-    labs(x = "Vertices (n)", y = TeX("Log($\\langle k^2 \\rangle)$")) +
+    labs(x = "n", y = TeX("Log($\\langle k^2 \\rangle)$")) +
     scale_y_log10() +
     theme_minimal() +
     theme(axis.text=element_text(size=8), axis.title=element_text(size=10))
@@ -54,7 +54,7 @@ for (file in files) {
   plot_averaged <- ggplot(metrics, aes(x = vertices, y = degree_2nd_moment)) +
     stat_summary(fun = mean, geom = "line") +
     stat_summary(fun.data = "mean_cl_boot", geom = "ribbon", alpha = 0.2) +  # Deviation shaded area
-    labs(x = "Vertices (n)", y = TeX("Avg. $\\langle k^2 \\rangle$")) +
+    labs(title = lang, x = "n", y = TeX("Avg. $\\langle k^2 \\rangle$")) +
     theme_minimal() +
     theme(axis.text=element_text(size=8), axis.title=element_text(size=10))
   
@@ -69,7 +69,7 @@ for (file in files) {
   plot_averaged_log_y <- ggplot(metrics, aes(x = vertices, y = degree_2nd_moment)) +
     stat_summary(fun = mean, geom = "line") +
     stat_summary(fun.data = "mean_cl_boot", geom = "ribbon", alpha = 0.2) +  # Deviation shaded area
-    labs(x = "Vertices (n)", y = TeX("Log(Avg. $\\langle k^2 \\rangle)$")) +
+    labs(x = "n", y = TeX("Log(Avg. $\\langle k^2 \\rangle)$")) +
     scale_y_log10() +
     theme_minimal() +
     theme(axis.text=element_text(size=8), axis.title=element_text(size=10))
@@ -94,8 +94,8 @@ for (file in files) {
     geom_line(data = metrics, aes(x = vertices, y = (1 - 1/vertices) * (5 - 6/vertices), color = "Red")) +
     geom_line(data = metrics, aes(x = vertices, y = 4 - 6/vertices, color = "Blue1")) +
     geom_line(data = metrics, aes(x = vertices, y = vertices - 1, color = "Blue2")) +
-    labs(x = "Vertices (n)", 
-         y = TeX("Degree 2nd Moment $\\langle k^2 \\rangle$")) +
+    labs(title = lang, x = "n", 
+         y = TeX("$\\langle k^2 \\rangle$")) +
     scale_y_log10() + 
     scale_x_log10() +
     scale_color_manual(
@@ -114,7 +114,3 @@ for (file in files) {
   
   ggsave(filename = paste0("plots/", lang, "_scaling_visualization.png"), plot = plot_scaling_visualization)
 }
-
-# Els plots que semblen mes una recta son els que tenen log a l'eix x
-# Aixo podria indicar que <k2> ~ log(n)
-
