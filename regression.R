@@ -59,6 +59,16 @@ for (i in seq_along(files)) {
   # Check homoscedasticity
   is_homo <- check_homoscedasticity(df$vertices, df$degree_2nd_moment)
   table_homo[lang, "Homoscedastic"] <- is_homo
+
+  variance_table <- aggregate(df$degree_2nd_moment,
+                              by = list(n = df$vertices),
+                              FUN = var)
+  colnames(variance_table) <- c("vertices", "variance")
+  
+  plot(variance_table$vertices, variance_table$variance,
+       xlab = "Number of vertices (n)",
+       ylab = "Variance of metric",
+       main = "Variance as a function of sentence length")
   
   if (is_homo) {
     use_df <- df
@@ -204,3 +214,4 @@ print(df_params)
 digits <- c(0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2)
 latex_table <- xtable(df_params, type = "latex", row.names = TRUE, digits = digits)
 print(latex_table, file = "table_params.tex", include.rownames = TRUE)
+
